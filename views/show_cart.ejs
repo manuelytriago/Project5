@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	
+  <link rel="stylesheet" href="../css/style.css" type="text/css"/>  
+  <title>Orinoco</title>
+  </head>
+  <body>
+<!-- START HEADER-->
+<div class="bg-dark"> 
+  <div class="container">
+    <div class="row">
+      <nav class="col navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="/"> 
+          <!-- <img src="" width="40" height="30" alt="">Orinoco</a> -->
+          Orinoco</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Products</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/show_cart">Cart</a>
+            </li>
+              <!--<li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="cart" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Menu
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/">Products</a>
+                  <a class="dropdown-item" href="/show_cart">Your Cart</a>
+                </div>
+              </li>-->
+            </ul>
+          </div>
+        </nav>
+    </div>
+  </div>
+</div>
+<!-- END HEADER-->
+<!-- START BODY-->
+  <div class="container">
+    <div class="jumbotron">
+      <h1 id="message" > Welcome to Orinoco Shop </h1>
+    </div>
+    <div id="items" class="container row pb-3">
+    </div> 
+    <div class="mb-3">
+      <p id="totalPrice">Total order price:</p>
+  </div>
+  <form id="formElement" action="/show_cart" class="container pb-3">
+        <div class="mb-3">
+          <label for="validationDefault01" class="form-label">First Name</label>
+          <input id="firstName" type="text" class="form-control" id="validationDefault01" placeholder="Manuel" required>
+        </div>
+        <div class="mb-3">
+          <label for="validationDefault02" class="form-label">Last Name</label>
+          <input id="lastName" type="text" class="form-control" id="validationDefault02" placeholder="Ytriago" required>
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Address</label>
+          <input id="address" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="North West 27th street" required></input>
+
+        </div>
+        <div class="mb-3">
+          <label for="validationDefault03" class="form-label">City</label>
+          <input id="city" class="form-control" id="validationDefault03" rows="3" placeholder="Doral" required></input>
+
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Email address</label>
+          <input id="email" type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" required>
+
+        </div>
+          <input id="submit" value="Submit Form" type="submit" class="btn btn-outline-primary"></input>   
+  </form>
+
+  <div id="pos" class="mb-3">
+    <!-- Success -->
+    <div id="success" class="alert"></div>
+    <!-- Unsuccessfull -->
+    <div id="danger" class="alert"></div>
+    <!-- Array of form -->
+    <div id="contact" class="alert"></div>
+    <!--  Array of id validados antes de enviarse -->
+    <div id="products" class="alert"></div>
+  </div>
+  </div>
+<!-- END BODY-->
+<!-- START FOOTER -->
+  <div class="bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <ul class="list-inline text-center">
+            <li class="list-inline-item"><a href="#">About Us</a></li>
+            <li class="list-inline-item">&middot;</li>
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item">&middot;</li>
+            <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>  
+  </div>
+<!-- END FOOTER-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="../js/script.js"></script>
+<script>
+  displayCart();
+</script>
+</body>
+</html>

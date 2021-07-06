@@ -2,8 +2,6 @@
 
 const items = document.getElementById('items');
 let keys;
-//console.log(document.getElementById('formElement'));
-console.log(localStorage);
 if (document.getElementById('formElement') != null){
 const formElement = document.getElementById('formElement');
 
@@ -472,13 +470,10 @@ const email = document.getElementById('email');
   const object = {contact, products};
 
   keys = Object.keys(localStorage);
-  console.log(keys);
 
   var length = 1;
   for (i = 0 ; i <= keys[0] ; i++ ){
-    console.log("Key :"+keys[i]);
     if(parseInt(length) < parseInt(keys[i])){
-      console.log("Key mayor")
       length = parseInt(keys[i]);
     }
   }

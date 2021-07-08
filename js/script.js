@@ -133,14 +133,9 @@ function makeRequest(verb, url, data) {
 
 //Function to display all product of the database
 async function displayAllProducts() {
-  const uidPromise = makeRequest('GET', api);
-try {
-  const [uidResponse] = await Promise.all([uidPromise]);
 
   const postPromise = makeRequest('GET', api, {
-    uid: uidResponse.uid,
     });
-
     try {
     const postResponse = await postPromise;
     postResponse.forEach(element => {
@@ -244,23 +239,12 @@ try {
       message.textContent = error.error;
 
     }
-
-  } catch(error){
-    message.textContent = error.error;
-
-
-  }
 }
 
 // Function to display a single product by id
 async function displaySingleProduct(id) {
 
-  const uidPromise = makeRequest('GET', api+"/"+id);
-try {
-  const [uidResponse] = await Promise.all([uidPromise]);
-
   const postPromise = makeRequest('GET', api+"/"+id, {
-    uid: uidResponse.uid,
   });
 try {
   const postResponse = await postPromise;
@@ -345,11 +329,6 @@ try {
     div3.appendChild(button1);
   }catch(error){
     message.textContent = error.error;
-
-  }
-
-  } catch(error){
-  message.textContent = error.error;
 
   }
 }

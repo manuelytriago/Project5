@@ -365,7 +365,7 @@ try {
 
 //Function to remove a specific qty of an item from the storage
 function removeFromCart(postResponse,qty,page,value,from) {
-  
+
   let answer = document.getElementById("color"+postResponse._id).value;
   let success = document.getElementById("success");
   success.innerHTML = "";
@@ -380,8 +380,11 @@ function removeFromCart(postResponse,qty,page,value,from) {
     var json = JSON.parse(array);
 
     if (total > json.count ){
-      alert("You can't delete more than you have in your cart");
-      
+
+    alert("You can't delete more than you have in your cart");
+    let qty = document.getElementById("qty"+postResponse.colors+postResponse._id);
+    qty.value = postResponse.count;
+    qty.innerHTML == postResponse.count;
     }else{
     total = json.count - total;
     json.count = total;
@@ -400,7 +403,10 @@ function removeFromCart(postResponse,qty,page,value,from) {
         const responseDanger = document.getElementById('danger');
         responseDanger.innerHTML="You have removed an item from the cart";
         responseDanger.className = "alert-danger";
-      localStorage.setItem(item,JSON.stringify(json));
+        localStorage.setItem(item,JSON.stringify(json));
+        let qty = document.getElementById("qty"+postResponse.colors+postResponse._id);
+        qty.value = total;
+        qty.innerHTML == total;
       //parent.open(page, value);
       }
     var array = localStorage.getItem(item);
@@ -620,7 +626,7 @@ const email = document.getElementById('email');
       button2.formMethod = "POST";
       button2.onclick = function() {
         var value = document.getElementById("qty"+this.value).value;
-        updateCart(json,value,"/show_cart",'_self');
+        updateCart(json,value,"/show_cart",'_self','cart');
         //parent.open("/show_cart",'_self');
       };
       div5.appendChild(button2);
@@ -635,7 +641,7 @@ const email = document.getElementById('email');
       button3.formMethod = "POST";
       button3.onclick = function() {
         var value = document.getElementById("qty"+this.value).value;
-        removeFromCart(json,value,"/show_cart",'_self');
+        removeFromCart(json,value,"/show_cart",'_self','cart');
         //parent.open("/show_cart",'_self');
       };
       div5.appendChild(button3);
@@ -684,11 +690,12 @@ function updateCart(postResponse,qty,page,value,from) {
     if(item != 0){
     var array = localStorage.getItem(item);
     var json = JSON.parse(array);
-    if (total > 1){
-      total = total;
-    }else{
-      total = total + parseInt(json.count);
-    }
+    
+      if (total >= 1 && from === "cart"){
+        total = total;
+      }else{
+        total = total + parseInt(json.count);
+      }
     
     json.count = total;
     localStorage.setItem(item,JSON.stringify(json));

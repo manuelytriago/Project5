@@ -480,7 +480,6 @@ function findMyKey(postResponse, answer){
 
 // Function to display cart every single item with their color will be display 
 function displayCart() {
-  console.log(localStorage);
 const message = document.getElementById('message');
 const firstName = document.getElementById('firstName');
 const lastName = document.getElementById('lastName');
@@ -674,8 +673,15 @@ totalPrice.innerHTML += " "+Intl.NumberFormat('en-US', {currency:"USD" , style: 
 
 //Function to update qty of cart receiving item and qty to update
 function updateCart(postResponse,qty,page,value,from) {
- 
-  let answer = document.getElementById("color"+postResponse.colors+postResponse._id).value;
+  
+  let answer ;
+  if (from === "single"){
+   answer = document.getElementById("color"+postResponse._id).value;
+  
+  }else{
+   answer = document.getElementById("color"+postResponse.colors+postResponse._id).value;
+  
+  }
   let danger = document.getElementById("danger");
   danger.innerHTML = "";
   danger.className = "";

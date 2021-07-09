@@ -1,6 +1,8 @@
 
 
 const items = document.getElementById('items');
+const cart_Count = document.getElementById('cart_count');
+
 let keys;
 if (document.getElementById('formElement') != null){
 const formElement = document.getElementById('formElement');
@@ -28,6 +30,35 @@ let body = ["body"];
 // API URL
 const api = '/api/teddies';
 
+function cartCount(){
+  var count ;
+  keys = Object.keys(localStorage);
+  length = parseInt(keys[0]);
+  if (length != null){
+    count = 0;
+    length = parseInt(keys[0]);
+  }else{
+    count = "";
+  }
+
+  for (var i = 1 ; i <= length ; i++){
+
+    var array = localStorage.getItem(i);
+    var json = JSON.parse(array);
+    if(json != null){
+  
+      count = count + json.count;
+    }
+  }
+  if(count === 0){
+    cart_Count.value = "";
+    cart_Count.innerHTML = "";
+  }else{
+  cart_Count.value = " "+count;
+  cart_Count.innerHTML = " "+count;
+  }
+
+}
 
 // Function to make the order only when the products array has ids
 async function makeOrder(){
@@ -123,7 +154,7 @@ function makeRequest(verb, url, data) {
    };
    if (verb === 'POST') {
      
-     request.setRequestHeader('Content-Type', 'application/json');
+    request.setRequestHeader('Content-Type', 'application/json');
    request.send(JSON.stringify(data));
    } else {
      request.send();
@@ -157,17 +188,17 @@ async function displayAllProducts() {
       div3.className = "card-body";
       div2.appendChild(div3);
       const h5 = document.createElement('h5');
-      h5.className = "card-title";
+      h5.className = "card-title text-center";
       h5.innerHTML = element.name;
       div3.appendChild(h5);
       
-      const p = document.createElement('p');
+      /*const p = document.createElement('p');
       p.className = "card-text";
       p.innerHTML = element.description;
       div3.appendChild(p);
-      /*const div4 = document.createElement('div');
+      const div4 = document.createElement('div');
         div4.className = "card-body flex_colors";
-        div3.appendChild(div4);*/
+        div3.appendChild(div4);
         const select = document.createElement('select');
         select.id = 'color'+element.colors+element._id;
         select.className = "card-text";
@@ -187,7 +218,7 @@ async function displayAllProducts() {
                 opt.innerHTML = colors;
                 select.appendChild(opt);
       });
-      div3.appendChild(select);
+      div3.appendChild(select);*/
 
 
       const p2 = document.createElement('p');
@@ -198,7 +229,7 @@ async function displayAllProducts() {
       a.className = "btn btn-primary stretched-link";
       div3.appendChild(a);*/
   
-      const button1 = document.createElement('a');
+      /*const button1 = document.createElement('a');
       button1.className = "btn btn-danger";
       button1.type = "button";
       button1.style.marginRight = "5%";
@@ -206,22 +237,24 @@ async function displayAllProducts() {
       button1.id = element._id;
       //button1.formMethod = "POST";
       button1.onclick = function() {
-        removeFromCart(element,1);
-        parent.open("/", '_self');
+        removeFromCart(element,1,"/","_self");
+        //parent.open("/", '_self');
       };
-      div3.appendChild(button1);
+      div3.appendChild(button1);*/
   
-      const button2 = document.createElement('a');
+      /*const button2 = document.createElement('a');
       button2.className = "btn btn-primary card-text";
       button2.type = "button";
       button2.innerHTML = "Add to cart";
       button2.id = element._id;
       //button2.formMethod = "POST";
       button2.onclick = function() {
-        updateCart(element,1);
-        parent.open("/", '_self');
+        updateCart(element,1,"/","_self");
+        //updateCart(element,1);
+        //parent.open("/", '_self');
       };
-      div3.appendChild(button2);
+      div3.appendChild(button2);*/
+
       const button3 = document.createElement('a');
       button3.className = "btn btn-primary card-text";
       button3.type = "button";
@@ -231,7 +264,7 @@ async function displayAllProducts() {
       button3.formMethod = "POST";
       button3.onclick = function() {
         parent.open("single_product/"+element._id, '_self');
-        displaySingleProduct(element._id)
+        displaySingleProduct(element._id,"single_product/"+element._id,'_self')
       };
       div2.appendChild(button3);
       });
@@ -242,13 +275,12 @@ async function displayAllProducts() {
 }
 
 // Function to display a single product by id
-async function displaySingleProduct(id) {
+async function displaySingleProduct(id,page) {
 
   const postPromise = makeRequest('GET', api+"/"+id, {
   });
 try {
   const postResponse = await postPromise;
-
     items.style.justifyContent = "center";
     const div1 = document.createElement('div');
     div1.className = "col-12 col-lg-4";
@@ -279,7 +311,7 @@ try {
     div3.appendChild(p2);
 
     const select = document.createElement('select');
-    select.id = 'color'+postResponse.colors+postResponse._id;;
+    select.id = 'color'+postResponse._id;
     select.style.marginBottom = "0.5rem";
     select.className = "card-text";
     select.value = "Select Color";
@@ -288,9 +320,7 @@ try {
     var opt = document.createElement('option');
     opt.value = "Select Color";
     opt.innerHTML = "Select Color";
-    select.appendChild(opt);
-    
-    
+    select.appendChild(opt);  
     postResponse.colors.forEach(colors => {
     var opt = document.createElement('option');
             opt.className = "color_"+colors+" border";
@@ -308,8 +338,8 @@ try {
     button1.id = postResponse._id;
     button1.formMethod = "POST";
     button1.onclick = function() {
-      removeFromCart(postResponse,1)
-      parent.open("/single_product/"+postResponse._id, '_self');
+      removeFromCart(postResponse,1,"/single_product/"+postResponse._id,'_self',"single")
+      //parent.open("/single_product/"+postResponse._id, '_self');
     };
    
 
@@ -322,8 +352,8 @@ try {
     button2.id = postResponse._id;
     button2.formMethod = "POST";
     button2.onclick = function() {
-      updateCart(postResponse,1);
-      parent.open("/single_product/"+postResponse._id, '_self');
+      updateCart(postResponse,1,"/single_product/"+postResponse._id,'_self',"single");
+     // parent.open("/single_product/"+postResponse._id, '_self');
     };
     div3.appendChild(button2);
     div3.appendChild(button1);
@@ -334,10 +364,12 @@ try {
 }
 
 //Function to remove a specific qty of an item from the storage
-function removeFromCart(postResponse,qty) {
+function removeFromCart(postResponse,qty,page,value,from) {
   
-  let answer = document.getElementById("color"+postResponse.colors+postResponse._id).value;
-
+  let answer = document.getElementById("color"+postResponse._id).value;
+  let success = document.getElementById("success");
+  success.innerHTML = "";
+  success.className = "";
  
   if (answer !== 'Select Color'){
   var total = qty;
@@ -354,9 +386,22 @@ function removeFromCart(postResponse,qty) {
     total = json.count - total;
     json.count = total;
       if (total <= 0 ){
+        const responseDanger = document.getElementById('danger');
+        responseDanger.innerHTML="You have removed an item from the cart";
+        responseDanger.className = "alert-danger";
         localStorage.removeItem(item);
+        if(from === "single"){
+
+        }else{
+        parent.open(page, value);
+        }
+
       }else{
+        const responseDanger = document.getElementById('danger');
+        responseDanger.innerHTML="You have removed an item from the cart";
+        responseDanger.className = "alert-danger";
       localStorage.setItem(item,JSON.stringify(json));
+      //parent.open(page, value);
       }
     var array = localStorage.getItem(item);
     var json = JSON.parse(array);
@@ -371,6 +416,7 @@ function removeFromCart(postResponse,qty) {
   }
 
   
+  cartCount();
 
 }
 
@@ -431,7 +477,7 @@ function findMyKey(postResponse, answer){
 
 // Function to display cart every single item with their color will be display 
 function displayCart() {
-  const message = document.getElementById('message');
+const message = document.getElementById('message');
 const firstName = document.getElementById('firstName');
 const lastName = document.getElementById('lastName');
 const address = document.getElementById('address');
@@ -509,7 +555,7 @@ const email = document.getElementById('email');
       div5.appendChild(p2);
 
       const select = document.createElement('select');
-      select.id = "color"+json.colors+json._id;
+      select.id = "color"+json._id;
       select.className = "card-text";
       select.value = json.colors;
       select.innerHTML = "Select Color";
@@ -529,18 +575,32 @@ const email = document.getElementById('email');
       select_qty.className = "card-text";
       select_qty.innerHTML = "Qty: "+json.count;
       select_qty.style.width = "100%";
-
-      for (let j = 1 ; j <= 10 ; j++){
-        var opt2 = document.createElement('option');
-        opt2.value = j;
-        opt2.innerHTML = j;
-        if( j == json.count ){
-          opt2.selected = "Selected";
+      if (json.count > 10){
+        for (let j = 1 ; j <= json.count ; j++){
+          var opt2 = document.createElement('option');
+          opt2.value = j;
+          opt2.innerHTML = j;
+          if( j == json.count ){
+            opt2.selected = "Selected";
+          }
+  
+          select_qty.appendChild(opt2);
+  
         }
-
-        select_qty.appendChild(opt2);
-
+      }else{
+        for (let j = 1 ; j <= 10 ; j++){
+          var opt2 = document.createElement('option');
+          opt2.value = j;
+          opt2.innerHTML = j;
+          if( j == json.count ){
+            opt2.selected = "Selected";
+          }
+  
+          select_qty.appendChild(opt2);
+  
+        }
       }
+      
       
       div5.appendChild(select_qty);
       const p3 = document.createElement('p');
@@ -560,8 +620,8 @@ const email = document.getElementById('email');
       button2.formMethod = "POST";
       button2.onclick = function() {
         var value = document.getElementById("qty"+this.value).value;
-        updateCart(json,value);
-        parent.open("/show_cart",'_self');
+        updateCart(json,value,"/show_cart",'_self');
+        //parent.open("/show_cart",'_self');
       };
       div5.appendChild(button2);
 
@@ -575,8 +635,8 @@ const email = document.getElementById('email');
       button3.formMethod = "POST";
       button3.onclick = function() {
         var value = document.getElementById("qty"+this.value).value;
-        removeFromCart(json,value);
-        parent.open("/show_cart",'_self');
+        removeFromCart(json,value,"/show_cart",'_self');
+        //parent.open("/show_cart",'_self');
       };
       div5.appendChild(button3);
     }
@@ -609,9 +669,12 @@ totalPrice.innerHTML += " "+Intl.NumberFormat('en-US', {currency:"USD" , style: 
 }
 
 //Function to update qty of cart receiving item and qty to update
-function updateCart(postResponse,qty) {
+function updateCart(postResponse,qty,page,value,from) {
  
-  let answer = document.getElementById("color"+postResponse.colors+postResponse._id).value;
+  let answer = document.getElementById("color"+postResponse._id).value;
+  let danger = document.getElementById("danger");
+  danger.innerHTML = "";
+  danger.className = "";
   keys = Object.keys(localStorage);
   var local_length = keys[0];
   
@@ -629,8 +692,16 @@ function updateCart(postResponse,qty) {
     
     json.count = total;
     localStorage.setItem(item,JSON.stringify(json));
+    const responseSuccess = document.getElementById('success');
+    responseSuccess.innerHTML="You have added an item to the cart";
+    responseSuccess.className = "alert-success";
     var array = localStorage.getItem(item);
     var json = JSON.parse(array);
+    if(from === "single"){
+
+    }else{
+    parent.open(page, value);
+    }
     }else{
       var count = total;
       postResponse.colors = answer;
@@ -646,12 +717,20 @@ function updateCart(postResponse,qty) {
       }else{
         lenght = 1 ;
       }
+    const responseSuccess = document.getElementById('success');
+    responseSuccess.innerHTML="You have added an item to the cart";
+    responseSuccess.className = "alert-success";
       localStorage.setItem(lenght,JSON.stringify(postResponse));
       var array = localStorage.getItem(postResponse._id);
       var json = JSON.parse(array);
+      if(from === "single"){
 
+      }else{
+      parent.open(page, value);
+      }
     }
   }else{
     alert('You need to select a color');
   }
+  cartCount();
 }

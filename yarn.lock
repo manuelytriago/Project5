@@ -826,12 +826,24 @@
   "resolved" "https://registry.npmjs.org/negotiator/-/negotiator-0.6.2.tgz"
   "version" "0.6.2"
 
+"node-bin-setup@^1.0.0":
+  "integrity" "sha512-uPIxXNis1CRbv1DwqAxkgBk5NFV3s7cMN/Gf556jSw6jBvV7ca4F9lRL/8cALcZecRibeqU+5dFYqFFmzv5a0Q=="
+  "resolved" "https://registry.npmjs.org/node-bin-setup/-/node-bin-setup-1.0.6.tgz"
+  "version" "1.0.6"
+
 "node-localstorage@^2.2.1":
   "integrity" "sha512-vv8fJuOUCCvSPjDjBLlMqYMHob4aGjkmrkaE42/mZr0VT+ZAU10jRF8oTnX9+pgU9/vYJ8P7YT3Vd6ajkmzSCw=="
   "resolved" "https://registry.npmjs.org/node-localstorage/-/node-localstorage-2.2.1.tgz"
   "version" "2.2.1"
   dependencies:
     "write-file-atomic" "^1.1.4"
+
+"node@^16.4.0":
+  "integrity" "sha512-6HFwNVm88RTjuMJVkvTq0TozF0fZdvtq56K5LStRaVJ4x3xQsax+P5sLsp3OChTsRlqr80eqoQ+mLggYXJte/g=="
+  "resolved" "https://registry.npmjs.org/node/-/node-16.4.0.tgz"
+  "version" "16.4.0"
+  dependencies:
+    "node-bin-setup" "^1.0.0"
 
 "nodemon@^2.0.7":
   "integrity" "sha512-XHzK69Awgnec9UzHr1kc8EomQh4sjTQ8oRf8TsGrSmHDx9/UmiGG9E/mM3BuTfNeFwdNBvrqQq/RHL0xIeyFOA=="

@@ -25,7 +25,7 @@
               <a class="nav-link" href="/">Products</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/show_cart">Cart</a>
+              <a class="nav-link" href="/show_cart">Cart<sup id="cart_count"></sup></a>
             </li>
               <!--<li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="cart" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,6 +47,13 @@
   <div class="container">
     <div class="jumbotron">
       <h1> Welcome to Orinoco </h1>
+    </div>
+    <div id="pos" class="mb-3">
+      <!-- Success -->
+      <div id="success" class="alert"></div>
+      <!-- Unsuccessfull -->
+      <div id="danger" class="alert"></div>
+    
     </div>
     <div id="items" class="container row pb-3">
     </div> 
@@ -75,6 +82,7 @@
 <script src="../js/script.js"></script>
 <script>
   displaySingleProduct("<%= id %>");
+  cartCount();
 </script>  
 </body>
 </html>

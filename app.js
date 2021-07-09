@@ -54,22 +54,6 @@ app.get('/show_cart', (req, res) => {
 app.post('/show_cart', (req, res) => {
   
 });
-/*app.get('/order_confirmation/:id/:contact/:amount', (req, res) => {
-
-  res.render('order_confirmation');
-});*/
-/*app.post('/show_cart', (req, res) => { 
-  const form = {
-    firstname : req.body.firstname,
-    lastname :req.body.lastname,
-    address : req.body.address,
-    city : req.body.city,
-    email : req.body.email,
-    amount : req.body.amount
-  }
-  res.redirect('/order_confirmation/'+JSON.parse(form));
-  
-});*/
 app.get('/order_confirmation/:first/:last/:orderId/:amount', (req, res) => {
   
   res.render('order_confirmation',{first: req.params.first,last: req.params.last,orderId: req.params.orderId,amount: req.params.amount});

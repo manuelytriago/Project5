@@ -366,11 +366,10 @@ try {
 //Function to remove a specific qty of an item from the storage
 function removeFromCart(postResponse,qty,page,value,from) {
 
-  let answer = document.getElementById("color"+postResponse._id).value;
+  let answer = document.getElementById("color"+postResponse.colors+postResponse._id).value;
   let success = document.getElementById("success");
   success.innerHTML = "";
   success.className = "";
- 
   if (answer !== 'Select Color'){
   var total = qty;
   var item = findMyItem(postResponse,answer);
@@ -436,12 +435,10 @@ function findMyItem(postResponse, answer){
   if (length != null){
     length = parseInt(keys[0]);
   }else{
-
     length = 1 ;
   }
 
   for (var i = 1 ; i <= length ; i++){
-
     var array = localStorage.getItem(i);
     var json = JSON.parse(array);
     if(json != null){
@@ -483,6 +480,7 @@ function findMyKey(postResponse, answer){
 
 // Function to display cart every single item with their color will be display 
 function displayCart() {
+  console.log(localStorage);
 const message = document.getElementById('message');
 const firstName = document.getElementById('firstName');
 const lastName = document.getElementById('lastName');
@@ -561,7 +559,7 @@ const email = document.getElementById('email');
       div5.appendChild(p2);
 
       const select = document.createElement('select');
-      select.id = "color"+json._id;
+      select.id = "color"+json.colors+json._id;
       select.className = "card-text";
       select.value = json.colors;
       select.innerHTML = "Select Color";
@@ -677,7 +675,7 @@ totalPrice.innerHTML += " "+Intl.NumberFormat('en-US', {currency:"USD" , style: 
 //Function to update qty of cart receiving item and qty to update
 function updateCart(postResponse,qty,page,value,from) {
  
-  let answer = document.getElementById("color"+postResponse._id).value;
+  let answer = document.getElementById("color"+postResponse.colors+postResponse._id).value;
   let danger = document.getElementById("danger");
   danger.innerHTML = "";
   danger.className = "";
@@ -692,7 +690,10 @@ function updateCart(postResponse,qty,page,value,from) {
     var json = JSON.parse(array);
     
       if (total >= 1 && from === "cart"){
-        total = total;
+      total = total;
+      let qty = document.getElementById("qty"+postResponse.colors+postResponse._id);
+      qty.value = total;
+      qty.innerHTML = total;
       }else{
         total = total + parseInt(json.count);
       }
@@ -704,11 +705,11 @@ function updateCart(postResponse,qty,page,value,from) {
     responseSuccess.className = "alert-success";
     var array = localStorage.getItem(item);
     var json = JSON.parse(array);
-    if(from === "single"){
+      if(from === "single"){
 
-    }else{
-    parent.open(page, value);
-    }
+      }else{
+      parent.open(page, value);
+      }
     }else{
       var count = total;
       postResponse.colors = answer;
